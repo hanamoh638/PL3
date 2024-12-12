@@ -1,0 +1,5 @@
+C:\Users\HP\source\repos\Student_Grade_System\Student_Grade_System\obj\Debug\net9.0\Student_Grade_System.fsproj.AssemblyReference.cache
+C:\Users\HP\source\repos\Student_Grade_System\Student_Grade_System\obj\Debug\net9.0\Student_Grade_System.AssemblyInfoInputs.cache
+C:\Users\HP\source\repos\Student_Grade_System\Student_Grade_System\obj\Debug\net9.0\Student_Grade_System.AssemblyInfo.fs
+C:\Users\HP\source\repos\Student_Grade_System\Student_Grade_System\obj\Debug\net9.0\Student_Grade_System.fsproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\Student_Grade_System\Student_Grade_System\obj\Debug\net9.0\Student_Grade_System.sourcelink.json
