@@ -33,7 +33,6 @@ let studentExists (id: int) =
  
     ////////////////////////////Grade Management1////////////////////////////////////////
  
-
     // Calculate the average for a single student's grades
 let calculateAverage grades =
     if List.isEmpty grades then 0.0
@@ -74,5 +73,5 @@ let passFailRate () =
         (passRate, failRate)
 
 
-
+/////////////////////////////////////////////////////grade management 2///////////////////////
  
