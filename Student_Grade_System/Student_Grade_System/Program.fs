@@ -144,3 +144,150 @@ let lowestGrade (grades: float list) =
                 lowest <- grade
 
         lowest
+////////////////////////////////Student Management//////////////////////////////////////////
+
+// Add a student
+let addStudent (id: int) (name: string) (grades: float list) =
+    if studentExists id then
+        MessageBox.Show("Student with this ID already exists!") |> ignore
+    else
+        let avg = calculateAverage grades
+        let highest = highestGrade grades
+        let lowest = lowestGrade grades
+
+        let newStudent =
+            { ID = id
+              Name = name
+              Grades = grades
+              AverageGrade = avg
+              HighestGrade = highest
+              LowestGrade = lowest }
+
+        studentDatabase <- newStudent :: studentDatabase
+        saveDatabaseToFile ()
+        MessageBox.Show("Student added successfully.") |> ignore
+
+// update student
+let updateStudent (id: int) (name: string) (grades: float list) =
+    let studentIndex = studentDatabase |> List.tryFindIndex (fun s -> s.ID = id)
+
+    match studentIndex with
+    | Some index ->
+        // Recalculate the grades
+        let avg = calculateAverage grades
+        let highest = List.max grades
+        let lowest = List.min grades
+
+        // Update the student record with new values
+        studentDatabase <-
+            studentDatabase
+            |> List.mapi (fun i s ->
+                if i = index then
+                    { s with
+                        Name = name
+                        Grades = grades
+                        AverageGrade = avg
+                        HighestGrade = highest
+                        LowestGrade = lowest }
+                else
+                    s)
+
+        saveDatabaseToFile ()
+        MessageBox.Show("Student updated successfully.") |> ignore
+    | None -> MessageBox.Show("Student not found!") |> ignore
+
+
+// remove a student by ID
+let removeStudent (id: int) =
+    studentDatabase <- studentDatabase |> List.filter (fun student -> student.ID <> id)
+    saveDatabaseToFile ()
+    MessageBox.Show("Student removed successfully.") |> ignore
+
+
+
+// Remove all students
+let removeAllStudents () =
+    studentDatabase <- []
+    saveDatabaseToFile ()
+    MessageBox.Show("All students removed successfully.") |> ignore
+
+
+// Display all students in a ListBox
+let displayStudents (listBox: ListBox) =
+    listBox.Items.Clear()
+
+    studentDatabase
+    |> List.iter (fun student ->
+        let gradesString = String.Join(", ", student.Grades)
+
+        listBox.Items.Add(
+            sprintf
+                "ID: %d, Name: %s , Grades: [%s ], StudentAverage:%.2f ,Highest:%.2f ,Lowest:%.2f"
+                student.ID
+                student.Name
+                gradesString
+                student.AverageGrade
+                student.HighestGrade
+                student.LowestGrade
+        )
+        |> ignore
+
+        let avgrade = calculateAverage (student.Grades)
+        let avg = classAverage ()
+        let (passRate, failRate) = passFailRate ()
+        let Status = IfPass(student.Grades)
+        let highInClass = highestGradeInClass ()
+        let lowInClass = lowestGradeInClass ()
+        listBox.Items.Add(sprintf "Status: %s" Status) |> ignore
+        listBox.Items.Add(sprintf "Class Average: %.2f" avg) |> ignore
+
+        match highInClass with
+        | Some high -> listBox.Items.Add(sprintf "The highest grade in class: %.2f" high) |> ignore
+        | None -> listBox.Items.Add("No grades available for highest grade.") |> ignore
+
+        match lowInClass with
+        | Some low -> listBox.Items.Add(sprintf "The lowest grade in class: %.2f" low) |> ignore
+        | None -> listBox.Items.Add("No grades available for lowest grade.") |> ignore
+
+        listBox.Items.Add(sprintf "Pass Rate: %.2f%%" passRate) |> ignore
+        listBox.Items.Add(sprintf "Fail Rate: %.2f%%" failRate) |> ignore
+
+        listBox.Items.Add(
+            sprintf
+                "----------------------------------------------------------------------------------------------------------------"
+        )
+        |> ignore)
+
+
+// Display student by ID in ListBox
+let displayStudentById (id: int) (listBox: ListBox) =
+    listBox.Items.Clear()
+
+    match studentDatabase |> List.tryFind (fun student -> student.ID = id) with
+    | Some student ->
+        let gradesString = String.Join(", ", student.Grades)
+
+        let avg = classAverage ()
+        let (passRate, failRate) = passFailRate ()
+        let Status = IfPass(student.Grades)
+        //listBox.Items.Clear()
+        listBox.Items.Add(
+            sprintf
+                "ID: %d, Name: %s , Grades: [%s ], YourAverage:%.2f ,Highest:%.2f ,Lowest:%.2f"
+                student.ID
+                student.Name
+                gradesString
+                student.AverageGrade
+                student.HighestGrade
+                student.LowestGrade
+        )
+        |> ignore
+
+        listBox.Items.Add(sprintf "Status: %s" Status) |> ignore
+        listBox.Items.Add(sprintf "Class Average: %.2f" avg) |> ignore
+
+        listBox.Items.Add(sprintf "Pass Rate: %.2f%%" passRate) |> ignore
+        listBox.Items.Add(sprintf "Fail Rate: %.2f%%" failRate) |> ignore
+
+        MessageBox.Show(sprintf "Student found Successfully") |> ignore
+    | None -> MessageBox.Show("Student not found!") |> ignore
