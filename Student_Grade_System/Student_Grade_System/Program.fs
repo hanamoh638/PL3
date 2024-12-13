@@ -74,4 +74,22 @@ let passFailRate () =
 
 
 /////////////////////////////////////////////////////grade management 2///////////////////////
- 
+//highest grade in all class
+let highestGradeInClass () =
+    let allGrades = 
+     studentDatabase
+        |> List.collect (fun student -> student.Grades)  
+    if List.isEmpty allGrades then
+        None
+    else 
+        Some(List.max allGrades)  
+
+ //lowest grade in all class
+let lowestGradeInClass () =
+    let allGrades = 
+         studentDatabase 
+        |> List.collect (fun student -> student.Grades)  
+    if List.isEmpty allGrades then
+        None
+    else
+        Some(List.min allGrades)   
