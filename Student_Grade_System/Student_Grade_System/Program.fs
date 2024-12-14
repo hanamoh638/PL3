@@ -427,8 +427,7 @@ let createViewerForm () =
     form.Controls.Add(idLabel)
     form.Controls.Add(idTextBox)
     form.Controls.Add(displayStudent)
-    //////////////////////////////////admin authentcation////////////////////////////////
-    
+  
 // Admin authentication function
 let createAdminAuthenticationForm () =
 
@@ -470,18 +469,8 @@ let createAdminAuthenticationForm () =
     form.Controls.Add(loginButton)
     
     form
-
-
-    displayStudent.Click.Add(fun _ ->
-        let id = int idTextBox.Text
-        displayStudentById id studentListBox  
-        idTextBox.Text <- ""
-     
-    )
-    form
     
 /////////////////////////////////////////////////
-// Main Form creation for the choice window
 let createMainForm () =
     let form = new Form(Text = "Student Management System", Width = 600, Height = 400)
     form.BackColor <- System.Drawing.Color.Beige
@@ -525,5 +514,3 @@ let main argv =
     let form = createMainForm ()
     Application.Run(form)
     0
-  
-    
