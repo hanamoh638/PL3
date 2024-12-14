@@ -291,3 +291,118 @@ let displayStudentById (id: int) (listBox: ListBox) =
 
         MessageBox.Show(sprintf "Student found Successfully") |> ignore
     | None -> MessageBox.Show("Student not found!") |> ignore
+
+    ///////////////////////////////////////GUI////////////////////////////////////////////////////////
+// admin Form creation
+let createAdminForm () =
+    let form = new Form(Text = "Admin", Width = 600, Height = 400)
+    form.BackColor <- System.Drawing.Color.Beige
+    
+
+    // ListBox to show students
+    let studentListBox = new ListBox(Dock = DockStyle.Top, Height = 150)
+
+    //labels
+    let idLabel = new Label(Text = "Student ID:", Top = 160, Left = 5, Width = 100, Height = 20)
+    let nameLabel = new Label(Text = "Student Name:", Top = 190, Left = 5,Width = 100, Height = 20)
+    let gradesLabel = new Label(Text = "Grades (comma):",Top = 220, Left = 5,Width = 100, Height = 20)
+
+    // TextBoxes and Labels for input
+    let idTextBox = new TextBox(Top = 160, Left = 100, Width = 130 )
+    let nameTextBox = new TextBox(Top = 190, Left = 100, Width = 130)
+    let gradesTextBox = new TextBox(Top = 220, Left = 100, Width = 130)
+
+    // Buttons for operations
+    let addButton = new Button(Text = "Add Student", Top = 160, Left = 270 , Width = 130, Height = 35)
+    let updateButton = new Button(Text = "Update Student", Top = 160, Left = 430 , Width = 130, Height = 35)
+    let removeButton = new Button(Text = "Remove Student", Top = 260, Left = 270 , Width = 130, Height = 35)
+    let displayButton = new Button(Text = "Display All Students", Top = 210, Left = 430, Width = 130, Height = 35)
+    let removeAllButton = new Button(Text = "Remove All Students", Top = 260, Left = 430, Width = 130, Height = 35)
+    let displayStudent = new Button(Text = "Display Student", Top = 210, Left = 270, Width = 130, Height = 35)
+    let clearButton = new Button(Text = "Clear ", Top = 310, Left = 270, Width = 130, Height = 35)
+
+
+    // Button Click Events
+    addButton.Click.Add(fun _ ->
+        let id = int idTextBox.Text
+        let name = nameTextBox.Text
+        let grades = gradesTextBox.Text.Split(',') |> Array.map float |> List.ofArray
+        addStudent id name grades
+        displayStudentById id studentListBox
+        idTextBox.Text <- ""
+        nameTextBox.Text <- ""
+        gradesTextBox.Text <- ""
+    )
+
+    updateButton.Click.Add(fun _ ->
+        let id = int idTextBox.Text
+        let name = nameTextBox.Text
+        let grades = gradesTextBox.Text.Split(',') |> Array.map float |> List.ofArray
+        updateStudent id name grades
+        displayStudents studentListBox  
+        idTextBox.Text <- ""
+        nameTextBox.Text <- ""
+        gradesTextBox.Text <- ""
+    )
+
+    removeButton.Click.Add(fun _ ->
+        let id = int idTextBox.Text
+        removeStudent id
+        displayStudents studentListBox
+        idTextBox.Text <- ""
+        nameTextBox.Text <- ""
+        gradesTextBox.Text <- ""
+    )
+
+    displayButton.Click.Add(fun _ ->
+        displayStudents studentListBox
+    )
+
+    removeAllButton.Click.Add(fun _ ->
+        removeAllStudents ()  
+        displayStudents studentListBox  
+    )
+
+    displayStudent.Click.Add(fun _ ->
+        let id = int idTextBox.Text
+        displayStudentById id studentListBox  
+        idTextBox.Text <- ""
+        nameTextBox.Text <- ""
+        gradesTextBox.Text <- ""
+    )
+
+     
+    clearButton.Click.Add(fun _ ->
+    studentListBox.Items.Clear() 
+    MessageBox.Show("window cleared") |> ignore
+      )
+
+
+    addButton.BackColor <- System.Drawing.Color.BurlyWood
+    updateButton.BackColor <- System.Drawing.Color.BurlyWood
+    displayStudent.BackColor <- System.Drawing.Color.BurlyWood
+    removeButton.BackColor <- System.Drawing.Color.BurlyWood
+    displayButton.BackColor <- System.Drawing.Color.ForestGreen
+    removeAllButton.BackColor <- System.Drawing.Color.Brown
+    clearButton.BackColor <- System.Drawing.Color.BurlyWood
+
+
+
+
+    //add controls to the form
+    form.Controls.Add(studentListBox)
+    form.Controls.Add(idTextBox)
+    form.Controls.Add(nameTextBox)
+    form.Controls.Add(gradesTextBox)
+    form.Controls.Add(addButton)
+    form.Controls.Add(updateButton)
+    form.Controls.Add(removeButton)
+    form.Controls.Add(displayButton)
+    form.Controls.Add(idLabel)
+    form.Controls.Add(nameLabel)
+    form.Controls.Add(gradesLabel)
+    form.Controls.Add(removeAllButton)
+    form.Controls.Add(displayStudent)
+    form.Controls.Add(clearButton)
+    form
+
