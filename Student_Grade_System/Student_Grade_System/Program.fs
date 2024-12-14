@@ -427,6 +427,50 @@ let createViewerForm () =
     form.Controls.Add(idLabel)
     form.Controls.Add(idTextBox)
     form.Controls.Add(displayStudent)
+    //////////////////////////////////admin authentcation////////////////////////////////
+    
+// Admin authentication function
+let createAdminAuthenticationForm () =
+
+    let adminUsername = "admin"
+    let adminPassword = "123"
+
+    let form = new Form(Text = "Admin Authentication", Width = 600, Height = 400)
+    form.BackColor <- System.Drawing.Color.Beige
+    
+    let usernameLabel = new Label(Text = "Username:", Top = 20, Left = 50)
+    let passwordLabel = new Label(Text = "Password:", Top = 60, Left = 50)
+    let usernameTextBox = new TextBox(Top = 20, Left = 160, Width = 150)
+    let passwordTextBox = new TextBox(Top = 60, Left = 160, Width = 150, UseSystemPasswordChar = true)
+
+    usernameLabel.Font<- new System.Drawing.Font("Arial", 12.0f, System.Drawing.FontStyle.Bold)
+    passwordLabel.Font<- new System.Drawing.Font("Arial", 12.0f, System.Drawing.FontStyle.Bold)
+    
+    let loginButton = new Button(Text = "Login", Top = 100, Left = 180,  Width = 130, Height = 35)
+    loginButton.Click.Add(fun _ ->
+        if usernameTextBox.Text = adminUsername && passwordTextBox.Text = adminPassword then
+            MessageBox.Show("Login successful!", "Success") |> ignore
+            form.Close() // Close the authentication form
+
+            // Show Admin Form
+            let adminForm = createAdminForm()
+            adminForm.ShowDialog() |> ignore
+        else
+            MessageBox.Show("Invalid admin.", "Error") |> ignore
+    )
+    
+    loginButton.Font<- new System.Drawing.Font("Arial", 12.0f, System.Drawing.FontStyle.Bold)
+    loginButton.BackColor <- System.Drawing.Color.BurlyWood
+
+    // Add controls to the form
+    form.Controls.Add(usernameLabel)
+    form.Controls.Add(passwordLabel)
+    form.Controls.Add(usernameTextBox)
+    form.Controls.Add(passwordTextBox)
+    form.Controls.Add(loginButton)
+    
+    form
+
 
     displayStudent.Click.Add(fun _ ->
         let id = int idTextBox.Text
