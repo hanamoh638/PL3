@@ -435,4 +435,48 @@ let createViewerForm () =
     form
 
     /////////////////////////////////////////////////
+    let createMainForm () =
+    let form = new Form(Text = "Student Management System", Width = 600, Height = 400)
+    form.BackColor <- System.Drawing.Color.Beige
+
+    let titlelabel = new Label(Text = "Student Management System", Top = 100, Left = 130, Width = 600, Height = 100)
+
+    titlelabel.Font <- new System.Drawing.Font("Arial", 18.0f, System.Drawing.FontStyle.Bold)
+    
+    // Admin Button
+    let adminButton = new Button(Text = "Admin", Width = 150, Height = 50, Top = 200, Left = 100)
+    adminButton.Click.Add(fun _ ->
+        let adminForm = createAdminForm()
+        adminForm.ShowDialog() |> ignore
+    )
+    adminButton.Font<- new System.Drawing.Font("Arial", 11.0f, System.Drawing.FontStyle.Bold)
+    adminButton.BackColor <- System.Drawing.Color.BurlyWood
+
+    // Viewer Button
+    let viewerButton = new Button(Text = "Viewer", Width = 150, Height = 50, Top = 200, Left = 350)
+    viewerButton.Click.Add(fun _ ->
+        let viewerForm = createViewerForm ()
+        viewerForm.ShowDialog() |> ignore
+    )
+    viewerButton.Font<- new System.Drawing.Font("Arial", 11.0f, System.Drawing.FontStyle.Bold)
+    viewerButton.BackColor <- System.Drawing.Color.BurlyWood
+    
+
+    // Adding buttons to the form
+    form.Controls.Add(adminButton)
+    form.Controls.Add(viewerButton)
+    form.Controls.Add(titlelabel)
+
+    form
+
+
+// Application entry point with STAThread
+[<STAThread>]
+[<EntryPoint>]
+let main argv =
+    loadDatabaseFromFile ()
+    let form = createMainForm ()
+    Application.Run(form)
+    0
+
     
