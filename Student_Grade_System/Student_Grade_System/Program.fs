@@ -292,6 +292,8 @@ let displayStudentById (id: int) (listBox: ListBox) =
         MessageBox.Show(sprintf "Student found Successfully") |> ignore
     | None -> MessageBox.Show("Student not found!") |> ignore
 
+
+
     ///////////////////////////////////////GUI////////////////////////////////////////////////////////
 // admin Form creation
 let createAdminForm () =
@@ -405,7 +407,7 @@ let createAdminForm () =
     form.Controls.Add(displayStudent)
     form.Controls.Add(clearButton)
     form
-//////////////////////////////////////////////////////////
+
 
     //////////////////////////////////////////Viewer Form//////////////////////////////////////////
 let createViewerForm () =
