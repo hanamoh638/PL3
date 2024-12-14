@@ -405,4 +405,34 @@ let createAdminForm () =
     form.Controls.Add(displayStudent)
     form.Controls.Add(clearButton)
     form
+//////////////////////////////////////////////////////////
 
+    //////////////////////////////////////////Viewer Form//////////////////////////////////////////
+let createViewerForm () =
+    let form = new Form(Text = "Viewr", Width = 600, Height = 400)
+    form.BackColor <- System.Drawing.Color.Beige
+    // ListBox to display students in the viewer window
+    let studentListBox = new ListBox(Dock = DockStyle.Top, Height = 150)
+    form.Controls.Add(studentListBox)
+    
+    let idLabel = new Label(Text = "Student ID:", Top = 215, Left = 5, Width = 90, Height = 20)
+    let idTextBox = new TextBox(Top = 215, Left = 100, Width = 140 )
+    let displayStudent = new Button(Text = "Display Student", Top = 210, Left = 270, Width = 130, Height = 35)
+
+    displayStudent.Font<- new System.Drawing.Font("Arial", 9.0f, System.Drawing.FontStyle.Bold)
+    displayStudent.BackColor <- System.Drawing.Color.BurlyWood
+
+    form.Controls.Add(idLabel)
+    form.Controls.Add(idTextBox)
+    form.Controls.Add(displayStudent)
+
+    displayStudent.Click.Add(fun _ ->
+        let id = int idTextBox.Text
+        displayStudentById id studentListBox  
+        idTextBox.Text <- ""
+     
+    )
+    form
+
+    /////////////////////////////////////////////////
+    
