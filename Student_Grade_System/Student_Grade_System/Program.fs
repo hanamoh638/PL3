@@ -175,8 +175,8 @@ let updateStudent (id: int) (name: string) (grades: float list) =
     | Some index ->
         // Recalculate the grades
         let avg = calculateAverage grades
-        let highest = List.max grades
-        let lowest = List.min grades
+         let highest =highestGrade grades
+        let lowest =lowestGrade grades
 
         // Update the student record with new values
         studentDatabase <-
