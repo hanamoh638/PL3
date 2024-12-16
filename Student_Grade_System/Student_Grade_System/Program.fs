@@ -456,6 +456,8 @@ let createAdminAuthenticationForm () =
             adminForm.ShowDialog() |> ignore
         else
             MessageBox.Show("Invalid admin.", "Error") |> ignore
+             usernameTextBox.Text <- ""
+             passwordTextBox.Text <- ""
     )
     
     loginButton.Font<- new System.Drawing.Font("Arial", 12.0f, System.Drawing.FontStyle.Bold)
